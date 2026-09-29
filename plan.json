@@ -1,0 +1,64 @@
+{
+  "course": {
+    "nom": "20 km de Paris",
+    "date": "2026-10-11",
+    "depart": "Pont d'Iéna, Tour Eiffel",
+    "objectif": "1h35",
+    "allure_moyenne": "4:45/km",
+    "fc_seuil": 175
+  },
+  "segments": [
+    {
+      "id": 1, "titre": "La bosse du départ", "km_start": 0, "km_end": 1.7,
+      "allure_cible": "4:55", "fc_cible": "150-160",
+      "conseil": "Monte à l'effort, pas à l'allure. Laisse les autres partir : tu les retrouveras."
+    },
+    {
+      "id": 2, "titre": "Descente piège", "km_start": 1.7, "km_end": 4.5,
+      "allure_cible": "4:38", "fc_cible": "152-160",
+      "conseil": "2,8 km de descente qui donne envie de dévaler. Ne descends jamais sous 4:35, ce temps gagné se paie au km 15."
+    },
+    {
+      "id": 3, "titre": "Mise en rythme", "km_start": 4.5, "km_end": 8, "type": "plat",
+      "allure_cible": "4:46", "fc_cible": "158-164",
+      "conseil": "Le plat arrive : cale-toi sur 4:45. Gel n°1 au km 6, avec une gorgée d'eau."
+    },
+    {
+      "id": 4, "titre": "Le cœur régulier", "km_start": 8, "km_end": 12, "type": "plat",
+      "allure_cible": "4:44", "fc_cible": "162-167",
+      "conseil": "Zone la plus plate : régularité pure, épaules relâchées. Ne regarde pas les autres, regarde ta montre."
+    },
+    {
+      "id": 5, "titre": "Faux plats, le piège", "km_start": 12, "km_end": 16.5, "piege": true,
+      "allure_cible": "4:47", "fc_cible": "165-170",
+      "conseil": "Les ondulations usent sans se voir. Tiens l'effort, pas l'allure. Gel n°2 au km 12,5."
+    },
+    {
+      "id": 6, "titre": "Dernière bosse", "km_start": 16.5, "km_end": 17.5,
+      "allure_cible": "4:55", "fc_cible": "168-172",
+      "conseil": "+12 m au km 17, quand tu es fatigué. Raccourcis la foulée, accepte 4:55, ne t'étouffe pas."
+    },
+    {
+      "id": 7, "titre": "On vide le réservoir", "km_start": 17.5, "km_end": 20,
+      "allure_cible": "4:38", "fc_cible": "170-178",
+      "conseil": "Il reste 2,5 km à plat, tout ce qui reste passe ici. Attention à la petite remontée finale au km 19,6."
+    }
+  ],
+  "fueling": {
+    "glucides_par_heure": "environ 35 g/h (2 gels Naak)",
+    "gels": [
+      {"km": 6, "minute": 28, "quoi": "Gel Naak n°1 + gorgée d'eau"},
+      {"km": 12.5, "minute": 59, "quoi": "Gel Naak n°2 + gorgée d'eau"}
+    ],
+    "regle": "Pas de gel après le km 15 : rien à digérer sur la fin.",
+    "boisson": "Une gorgée d'eau avec chaque gel, sans en boire plus."
+  },
+  "semaine_course": [
+    {"jour": "Lundi 5 à mercredi 7", "conseil": "Séances courtes et légères, au maximum 30-40 min avec 3 à 4 accélérations. Sommeil prioritaire."},
+    {"jour": "Jeudi 8", "conseil": "Dernier jour pour tester quoi que ce soit. Rien de nouveau après jeudi : ni aliment, ni chaussures, ni équipement, ni gel."},
+    {"jour": "Vendredi 9", "conseil": "Chargement modéré : 6-7 g de glucides/kg, soit environ 400-450 g. Repas habituels, plus de féculents."},
+    {"jour": "Samedi 10", "conseil": "Chargement : 8 g/kg, soit environ 520 g. Pauvre en fibres, sans alcool. Prépare tenue, dossard et gels."},
+    {"jour": "Dimanche 11", "conseil": "Petit-déjeuner 3 h avant : 1,5-2 g/kg, soit 100-130 g de glucides, habituel. Échauffement court de 10-15 min."}
+  ],
+  "meteo": "Octobre à Paris : environ 10-15 °C au départ, 13-19 °C en journée, ciel plutôt nuageux. Peu de risque de chaleur ; le vent est à surveiller sur les quais."
+}
