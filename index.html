@@ -81,9 +81,6 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}
   <h2>Segments</h2>
   <div class="cards" id="cards"></div>
 
-  <h2>Fueling &amp; semaine de course</h2>
-  <div class="info" id="info"></div>
-
   <div class="recap" id="recap"></div>
   <footer id="foot"></footer>
 </div>
@@ -181,14 +178,6 @@ $('cards').innerHTML=SEG.map(function(s,i){
   return '<div class="card'+(s.piege?' trap':'')+'" id="card'+i+'"><div class="mono">km '+s.km_start+' – '+s.km_end+'</div>'+
   '<h3>'+s.titre+'</h3><div class="nums"><span>Allure <b>'+s.allure_cible+'</b>/km</span><span>FC <b>'+s.fc_cible+'</b> bpm</span></div>'+
   '<p>'+s.conseil+'</p></div>'}).join('');
-
-// info boxes
-var F=PLAN.fueling;
-$('info').innerHTML=
- '<div class="box"><h3>Sur la course</h3><ul>'+F.gels.map(function(g){return '<li><b>Km '+g.km+'</b> (environ '+g.minute+' min) : '+g.quoi+'</li>'}).join('')+
- '<li>'+F.regle+'</li><li>'+F.boisson+'</li></ul></div>'+
- '<div class="box"><h3>Semaine de course</h3><ul>'+PLAN.semaine_course.map(function(d){return '<li><b>'+d.jour+'</b> : '+d.conseil+'</li>'}).join('')+'</ul></div>'+
- '<div class="box"><h3>Météo habituelle</h3><ul><li>'+PLAN.meteo+'</li><li>Vérifie la prévision à J-2 : ajoute environ 5 s/km au-dessus de 18 °C ou avec du vent de face.</li></ul></div>';
 
 // recap
 function pass(k){return fmtTimeHM(timeAt(k))}
