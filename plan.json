@@ -21,7 +21,7 @@
     {
       "id": 3, "titre": "Mise en rythme", "km_start": 4.5, "km_end": 8, "type": "plat",
       "allure_cible": "4:46", "fc_cible": "158-164",
-      "conseil": "Le plat arrive : cale-toi sur 4:45. Gel n°1 au km 6, avec une gorgée d'eau."
+      "conseil": "Le plat arrive : cale-toi sur 4:45. Gel n°1 au km 6, au ravitaillement, avec une gorgée d'eau."
     },
     {
       "id": 4, "titre": "Le cœur régulier", "km_start": 8, "km_end": 12, "type": "plat",
@@ -31,7 +31,7 @@
     {
       "id": 5, "titre": "Faux plats, le piège", "km_start": 12, "km_end": 16.5, "piege": true,
       "allure_cible": "4:47", "fc_cible": "165-170",
-      "conseil": "Les ondulations usent sans se voir. Tiens l'effort, pas l'allure. Gel n°2 au km 12,5."
+      "conseil": "Les ondulations usent sans se voir. Tiens l'effort, pas l'allure. Gel n°2 au km 12, au ravitaillement."
     },
     {
       "id": 6, "titre": "Dernière bosse", "km_start": 16.5, "km_end": 17.5,
@@ -48,7 +48,7 @@
     "glucides_par_heure": "environ 35 g/h (2 gels Naak)",
     "gels": [
       {"km": 6, "minute": 28, "quoi": "Gel Naak n°1 + gorgée d'eau"},
-      {"km": 12.5, "minute": 59, "quoi": "Gel Naak n°2 + gorgée d'eau"}
+      {"km": 12, "minute": 57, "quoi": "Gel Naak n°2 + gorgée d'eau"}
     ],
     "regle": "Pas de gel après le km 15 : rien à digérer sur la fin.",
     "boisson": "Une gorgée d'eau avec chaque gel, sans en boire plus."

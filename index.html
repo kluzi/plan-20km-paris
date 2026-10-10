@@ -2,87 +2,123 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
 <title>Plan 20 km de Paris</title>
 <meta name="description" content="Plan de course du 20 km de Paris, 11 octobre 2026 : profil, allures, FC et fueling.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233b4fd0'/%3E%3Cpath d='M4 22 10 12l5 6 4-9 9 13' fill='none' stroke='white' stroke-width='2.5' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 :root{
-  --bg:#f6f2ea; --card:#fffdf8; --ink:#16181d; --muted:#6b6f78; --line:#e3ddd0;
-  --blue:#2f4fd8; --blue-soft:#dfe5fb; --amber:#b9791a; --amber-soft:#f6e6c8;
-  --navy:#101b4d; --navy-ink:#f4f6ff; --navy-mute:#9aa7e0; --profile:#2f4fd8;
-}
-@media (prefers-color-scheme:dark){
-  :root{--bg:#121417;--card:#1b1e23;--ink:#eceef2;--muted:#9096a1;--line:#2c3038;
-    --blue:#7d95ff;--blue-soft:#232b4d;--amber:#e0a04a;--amber-soft:#3a2e18;
-    --navy:#0b1238;--profile:#7d95ff}
+  --bg:oklch(0.972 0.004 265);
+  --surface:oklch(0.995 0.002 265);
+  --ink:oklch(0.2 0.02 265);
+  --muted:oklch(0.44 0.02 265);
+  --line:oklch(0.9 0.008 265);
+  --blue:oklch(0.5 0.19 265);
+  --blue-soft:oklch(0.93 0.035 265);
+  --orange:oklch(0.7 0.17 55);
+  --amber-soft:oklch(0.95 0.05 85);
+  --navy:oklch(0.25 0.09 265);
+  --navy-ink:oklch(0.97 0.01 265);
+  --navy-mute:oklch(0.78 0.06 265);
+  --tip-bg:oklch(0.22 0.02 265);
+  --tip-ink:oklch(0.97 0.004 265);
+  --ease:cubic-bezier(.25,1,.5,1);
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);
-  font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-.wrap{max-width:980px;margin:0 auto;padding:24px 16px 48px}
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em;text-transform:uppercase;font-size:11px;color:var(--muted)}
-header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:flex-end;margin-bottom:20px}
-h1{font-size:clamp(28px,6vw,44px);line-height:1.05;margin:6px 0 6px;letter-spacing:-.02em}
-.sub{color:var(--muted);margin:0;max-width:34em}
+  font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-variant-numeric:tabular-nums}
+.wrap{max-width:900px;margin:0 auto;
+  padding:28px max(16px,env(safe-area-inset-right)) max(56px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:8px}
+
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:22px}
+.kicker{font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(28px,6.4vw,44px);line-height:1.05;margin:10px 0 8px;letter-spacing:-.025em;text-wrap:balance}
+.sub{color:var(--muted);margin:0;max-width:34em;text-wrap:pretty}
 .goal{display:flex;gap:10px}
-.goal div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:92px}
-.goal b{display:block;font-size:22px;line-height:1.2}
-.chart{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 12px 8px}
-.chart svg{display:block;width:100%;height:auto;touch-action:pan-y;user-select:none;-webkit-user-select:none}
-.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:10px;
-  padding:8px 10px;font-size:13px;line-height:1.35;white-space:nowrap;opacity:0;transition:opacity .1s;z-index:2}
-.tip b{font-size:15px}
-.hint{margin:8px 4px 2px;font-size:12px;color:var(--muted)}
-h2{font-size:12px;margin:30px 0 10px;font-family:ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
-.card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--blue);border-radius:12px;padding:14px 14px 12px;transition:box-shadow .15s,transform .15s}
-.card.trap{border-top-color:var(--amber);background:linear-gradient(var(--amber-soft),var(--card) 60%)}
-.card.on{box-shadow:0 0 0 2px var(--blue)}
-.card.trap.on{box-shadow:0 0 0 2px var(--amber)}
-.card h3{margin:2px 0 4px;font-size:18px;line-height:1.2}
-.card p{margin:8px 0 0;color:var(--muted);font-size:14px}
-.nums{display:flex;gap:14px;margin-top:8px;font-size:14px}
-.nums span b{font-size:16px}
-.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
-.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
-.box h3{margin:0 0 8px;font-size:16px}
-.box ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px}
-.box li{margin:5px 0}
-.box li b{color:var(--ink)}
-.recap{margin-top:24px;background:var(--navy);color:var(--navy-ink);border-radius:18px;padding:20px 22px;
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
-.recap .mono{color:var(--navy-mute)}
-.recap b{display:block;font-size:20px;line-height:1.25;margin-top:4px}
-.recap small{display:block;color:var(--navy-mute);margin-top:4px;font-size:13px}
-footer{margin-top:24px;font-size:12px;color:var(--muted)}
+.goal div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 16px;min-width:96px}
+.goal span{display:block;font-size:12px;color:var(--muted)}
+.goal b{display:block;font-size:26px;line-height:1.15;letter-spacing:-.01em}
+
+.chart{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 10px 6px}
+.chart svg{display:block;width:100%;height:auto;touch-action:pan-y;user-select:none;-webkit-user-select:none;border-radius:10px}
+.chart svg text{font-family:inherit}
+.tip{position:absolute;z-index:10;pointer-events:none;background:var(--tip-bg);color:var(--tip-ink);border-radius:10px;
+  padding:9px 12px;font-size:13px;line-height:1.4;width:max-content;max-width:min(330px,calc(100% - 12px));opacity:0;transition:opacity .12s var(--ease)}
+.tip b{font-size:16px}
+.tip small{display:block;opacity:.75;font-size:12px}
+
+h2{font-size:20px;letter-spacing:-.01em;margin:34px 0 12px}
+
+.segs{display:grid;gap:10px;margin:14px 0 0;padding:0;list-style:none}
+.seg{display:grid;grid-template-columns:36px 1fr;gap:6px 14px;background:var(--surface);border:1px solid var(--line);
+  border-radius:14px;padding:14px;transition:border-color .15s var(--ease),box-shadow .15s var(--ease)}
+.seg.on{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue)}
+.seg.trap.on{border-color:var(--orange);box-shadow:0 0 0 1px var(--orange)}
+.n{grid-row:span 1;width:36px;height:36px;border-radius:50%;background:var(--blue-soft);color:var(--blue);
+  display:grid;place-items:center;font-weight:700;font-size:15px}
+.seg h3{margin:0;font-size:18px;line-height:1.25;text-wrap:balance}
+.km{color:var(--muted);font-size:14px}
+.seg p{margin:6px 0 0;font-size:15px;max-width:60ch;text-wrap:pretty}
+.nums{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 0}
+.nums div{min-width:0;background:var(--bg);border-radius:10px;padding:8px 12px}
+.nums dt{font-size:12px;color:var(--muted)}
+.nums dd{margin:0;font-size:22px;line-height:1.25;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+.nums small{font-size:12px;font-weight:500;color:var(--muted);margin-left:3px}
+@media (max-width:359px){.nums{grid-template-columns:1fr}}
+@media (min-width:720px){
+  .seg{grid-template-columns:36px 1fr 300px;align-items:center;padding:16px 18px;gap:14px 18px}
+  .nums{grid-column:auto;margin:0}
+}
+
+.recap{margin-top:30px;background:var(--navy);color:var(--navy-ink);border-radius:18px;padding:22px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:22px}
+.recap>div{min-width:0}
+.recap .kicker{color:var(--navy-mute)}
+.recap b{display:block;font-size:21px;line-height:1.25;margin-top:6px;text-wrap:balance}
+.recap small{display:block;color:var(--navy-mute);margin-top:6px;font-size:14px}
+.marks{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:8px}
+.marks div{background:color-mix(in oklch,var(--navy-ink) 10%,transparent);border-radius:10px;padding:7px 8px}
+.marks span{display:block;font-size:12px;color:var(--navy-mute)}
+.marks span svg{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
+.recap .kicker svg{width:15px;height:15px;vertical-align:-3px;margin-right:6px}
+.marks strong{font-size:15px;white-space:nowrap}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-start" viewBox="0 0 16 16"><path d="M3.5 14.5V1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M4 2.5h8.5L10 5.8 12.5 9H4z" fill="currentColor"/></symbol>
+  <symbol id="i-finish" viewBox="0 0 16 16"><path d="M3.5 14.5V1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="4.5" y="2.5" width="9" height="6" fill="none" stroke="currentColor" stroke-width="1"/><path d="M4.5 2.5h3v3h-3zM10.5 2.5h3v3h-3zM7.5 5.5h3v3h-3z" fill="currentColor"/></symbol>
+  <symbol id="i-water" viewBox="0 0 16 16"><path d="M6.4 1.5h3.2v2L11 5.2V14a1.1 1.1 0 0 1-1.1 1.1H6.1A1.1 1.1 0 0 1 5 14V5.2l1.4-1.7z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M5 8.4c1-.7 2-.7 3 0s2 .7 3 0" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <symbol id="i-gel" viewBox="0 0 16 16"><path d="M5 1.5h6l.5 2.5v9.5a1.2 1.2 0 0 1-1.2 1.2H5.7a1.2 1.2 0 0 1-1.2-1.2V4z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M4.6 5.2h6.8" stroke="currentColor" stroke-width="1.4"/><path d="M8 8.2c1 1.3 1.6 2.1 1.6 2.9a1.6 1.6 0 0 1-3.2 0c0-.8.6-1.6 1.6-2.9z" fill="currentColor"/></symbol>
+</svg>
 <div class="wrap">
   <header>
     <div>
-      <div class="mono">Race plan · 20 km de Paris · 11 oct. 2026</div>
+      <div class="kicker">20 km de Paris · 11 octobre 2026</div>
       <h1>Sept segments, un seul rythme.</h1>
       <p class="sub">Plan kilomètre par kilomètre : là où la course se gagne, et là où elle se perd.</p>
     </div>
     <div class="goal">
-      <div><span class="mono">Objectif</span><b id="g-time">1h35</b></div>
-      <div><span class="mono">Allure</span><b id="g-pace">4:45</b></div>
+      <div><span>Objectif</span><b id="g-time"></b></div>
+      <div><span>Allure</span><b id="g-pace"></b></div>
     </div>
   </header>
 
   <div class="chart" id="chart">
-    <svg id="svg" role="img" aria-label="Profil d'élévation du 20 km de Paris"></svg>
-    <div class="tip" id="tip"></div>
-    <div class="hint">Survole ou glisse le doigt sur le profil pour lire l'allure et la FC cibles. Échelle verticale exagérée (dénivelé total environ +250 m).</div>
+    <svg id="svg" tabindex="0" role="img"
+      aria-label="Profil d'élévation du parcours. Touche ou survole pour lire l'allure et la FC cibles ; flèches gauche et droite au clavier."></svg>
+    <div class="tip" id="tip" aria-hidden="true"></div>
   </div>
 
-  <h2>Segments</h2>
-  <div class="cards" id="cards"></div>
+  <ol class="segs" id="segs"></ol>
 
   <div class="recap" id="recap"></div>
-  <footer id="foot"></footer>
 </div>
 
 <script id="plan" type="application/json">{
@@ -108,7 +144,7 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}
     {
       "id": 3, "titre": "Mise en rythme", "km_start": 4.5, "km_end": 8, "type": "plat",
       "allure_cible": "4:46", "fc_cible": "158-164",
-      "conseil": "Le plat arrive : cale-toi sur 4:45. Gel n°1 au km 6, avec une gorgée d'eau."
+      "conseil": "Le plat arrive : cale-toi sur 4:45. Gel n°1 au km 6, au ravitaillement, avec une gorgée d'eau."
     },
     {
       "id": 4, "titre": "Le cœur régulier", "km_start": 8, "km_end": 12, "type": "plat",
@@ -118,7 +154,7 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}
     {
       "id": 5, "titre": "Faux plats, le piège", "km_start": 12, "km_end": 16.5, "piege": true,
       "allure_cible": "4:47", "fc_cible": "165-170",
-      "conseil": "Les ondulations usent sans se voir. Tiens l'effort, pas l'allure. Gel n°2 au km 12,5."
+      "conseil": "Les ondulations usent sans se voir. Tiens l'effort, pas l'allure. Gel n°2 au km 12, au ravitaillement."
     },
     {
       "id": 6, "titre": "Dernière bosse", "km_start": 16.5, "km_end": 17.5,
@@ -131,11 +167,12 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}
       "conseil": "Il reste 2,5 km à plat, tout ce qui reste passe ici. Attention à la petite remontée finale au km 19,6."
     }
   ],
+  "ravitos": [3.5, 6, 9.5, 12, 15, 18],
   "fueling": {
     "glucides_par_heure": "environ 35 g/h (2 gels Naak)",
     "gels": [
       {"km": 6, "minute": 28, "quoi": "Gel Naak n°1 + gorgée d'eau"},
-      {"km": 12.5, "minute": 59, "quoi": "Gel Naak n°2 + gorgée d'eau"}
+      {"km": 12, "minute": 57, "quoi": "Gel Naak n°2 + gorgée d'eau"}
     ],
     "regle": "Pas de gel après le km 15 : rien à digérer sur la fin.",
     "boisson": "Une gorgée d'eau avec chaque gel, sans en boire plus."
@@ -154,104 +191,168 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}
 <script>
 (function(){
 var PLAN=JSON.parse(document.getElementById('plan').textContent);
-var PROF=JSON.parse(document.getElementById('profile').textContent); // [km, alt]
+var RAW=JSON.parse(document.getElementById('profile').textContent); // [km, alt]
+// médiane sur 3 points : retire les pics isolés du GPX (ex. passage souterrain)
+var MED=RAW.map(function(p,i){
+  if(i===0||i===RAW.length-1)return p;
+  var a=[RAW[i-1][1],p[1],RAW[i+1][1]].sort(function(x,y){return x-y});
+  return [p[0],a[1]];
+});
+// lissage gaussien (σ = 250 m) rééchantillonné tous les 100 m : courbe plus douce, relief conservé
+var PROF=(function(){
+  var end=MED[MED.length-1][0],sg=0.25,out=[];
+  for(var km=0;;km=Math.min(km+0.1,end)){
+    var s=0,w=0;
+    for(var i=0;i<MED.length;i++){var dx=MED[i][0]-km;if(dx>3*sg)break;if(dx<-3*sg)continue;
+      var g=Math.exp(-dx*dx/(2*sg*sg));s+=g*MED[i][1];w+=g}
+    out.push([km,s/w]);
+    if(km>=end)break;
+  }
+  return out;
+})();
 var SEG=PLAN.segments, TOTAL=PROF[PROF.length-1][0];
 var $=function(id){return document.getElementById(id)};
 
 function paceSec(s){var p=s.split(':');return (+p[0])*60+(+p[1])}
-function fmtPace(sec){var m=Math.floor(sec/60),s=Math.round(sec%60);if(s===60){m++;s=0}return m+':'+(s<10?'0':'')+s}
-function fmtTime(sec){var h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s=Math.round(sec%60);
-  if(s===60){m++;s=0}return (h?h+'h':'')+(h&&m<10?'0':'')+m+(h?'':' min ')+ (h?'':(s<10?'0':'')+s+' s')}
-function segAt(km){for(var i=0;i<SEG.length;i++){if(km<SEG[i].km_end||i===SEG.length-1)return i}}
+function fmtKm(k){return String(Math.round(k*10)/10).replace('.',',')}
+function fmtT(sec){var h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s=Math.round(sec%60);
+  if(s===60){m++;s=0}return (h?h+':'+(m<10?'0':''):'')+m+':'+(s<10?'0':'')+s}
+function segAt(km){for(var i=0;i<SEG.length;i++){if(km<SEG[i].km_end)return i}return SEG.length-1}
 function altAt(km){var lo=0,hi=PROF.length-1;while(hi-lo>1){var m=(lo+hi)>>1;if(PROF[m][0]<km)lo=m;else hi=m}
   var a=PROF[lo],b=PROF[hi];return b[0]===a[0]?a[1]:a[1]+(b[1]-a[1])*(km-a[0])/(b[0]-a[0])}
-// cumulative time at km
 var cum=[0];SEG.forEach(function(s,i){cum[i+1]=cum[i]+(s.km_end-s.km_start)*paceSec(s.allure_cible)});
 function timeAt(km){var i=segAt(km);return cum[i]+(km-SEG[i].km_start)*paceSec(SEG[i].allure_cible)}
 var totalSec=cum[SEG.length];
 
-// header
-$('g-time').textContent=PLAN.course.objectif;$('g-pace').textContent=PLAN.course.allure_moyenne.replace('/km','');
+$('g-time').textContent=PLAN.course.objectif;
+$('g-pace').innerHTML=PLAN.course.allure_moyenne.replace('/km','')+'<small style="font-size:14px;font-weight:500;color:var(--muted)">/km</small>';
 
-// cards
-$('cards').innerHTML=SEG.map(function(s,i){
-  return '<div class="card'+(s.piege?' trap':'')+'" id="card'+i+'"><div class="mono">km '+s.km_start+' – '+s.km_end+'</div>'+
-  '<h3>'+s.titre+'</h3><div class="nums"><span>Allure <b>'+s.allure_cible+'</b>/km</span><span>FC <b>'+s.fc_cible+'</b> bpm</span></div>'+
-  '<p>'+s.conseil+'</p></div>'}).join('');
+// segments
+$('segs').innerHTML=SEG.map(function(s,i){
+  var len=s.km_end-s.km_start;
+  return '<li class="seg'+(s.piege?' trap':'')+'" id="seg'+i+'">'+
+    '<div class="n">'+s.id+'</div>'+
+    '<div><h3>'+s.titre+'</h3>'+
+    '<div class="km">Km '+fmtKm(s.km_start)+' à '+fmtKm(s.km_end)+' · '+fmtKm(len)+' km</div>'+
+    '<p>'+s.conseil+'</p></div>'+
+    '<dl class="nums"><div><dt>Allure cible</dt><dd>'+s.allure_cible+'<small>/km</small></dd></div>'+
+    '<div><dt>FC cible</dt><dd>'+s.fc_cible.replace('-','–')+'<small>bpm</small></dd></div></dl></li>'}).join('');
+SEG.forEach(function(s,i){
+  var li=$('seg'+i);
+  li.addEventListener('mouseenter',function(){setActive(i)});
+  li.addEventListener('mouseleave',function(){setActive(-1)});
+});
 
-// recap
-function pass(k){return fmtTimeHM(timeAt(k))}
-function fmtTimeHM(sec){var h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s=Math.round(sec%60);if(s===60){m++;s=0}
-  return (h?h+':'+(m<10?'0':''):'')+m+':'+(s<10?'0':'')+s}
+// récap
+var marks=[5,10,15,20].map(function(k){return '<div><span>'+(k===20?'<svg aria-hidden="true"><use href="#i-finish"/></svg>':'')+k+' km</span><strong>'+fmtT(k===20?totalSec:timeAt(k))+'</strong></div>'}).join('');
 $('recap').innerHTML=
- '<div><div class="mono">Pacing</div><b>'+PLAN.course.allure_moyenne+', effort régulier</b><small>Cible '+fmtTimeHM(totalSec)+' · FC seuil '+PLAN.course.fc_seuil+' bpm</small></div>'+
- '<div><div class="mono">Fueling</div><b>2 gels Naak · km 6 et 12,5</b><small>Environ 35 g de glucides/h, une gorgée d\'eau à chaque gel</small></div>'+
- '<div><div class="mono">Repères course</div><b>5 km '+pass(5)+' · 10 km '+pass(10)+'</b><small>15 km '+pass(15)+' · arrivée '+fmtTimeHM(totalSec)+'</small></div>';
-$('foot').textContent='Profil issu du fichier GPX du parcours. Allure et FC cibles : estimations à ajuster selon le jour J.';
+ '<div><div class="kicker">Pacing</div><b>'+PLAN.course.allure_moyenne+', effort régulier</b><small>Cible '+fmtT(totalSec)+' · FC seuil '+PLAN.course.fc_seuil+' bpm</small></div>'+
+ '<div><div class="kicker"><svg aria-hidden="true"><use href="#i-gel"/></svg>Fueling</div><b>2 gels Naak · km 6 et 12</b><small>Environ 35 g de glucides/h, une gorgée d\'eau à chaque gel</small></div>'+
+ '<div><div class="kicker">Repères course</div><div class="marks">'+marks+'</div></div>';
 
-// chart
+// graphe
 var svg=$('svg'),tip=$('tip'),chart=$('chart'),NS='http://www.w3.org/2000/svg';
-var W,H,M={l:38,r:16,t:26,b:26},ymin=15,ymax=75,cur=-1;
-function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e}
-var FB={'--profile':'#2f4fd8','--line':'#e3ddd0','--muted':'#6b6f78','--amber':'#b9791a','--card':'#fffdf8'};
-function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()||FB[v]}
+var W,H,M={l:40,r:16,t:26,b:26},ymin=20,ymax=74,cur=-1,hoverKm=null,bands=[],cursor,dot;
+function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e}
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
 function X(k){return M.l+(W-M.l-M.r)*k/TOTAL}
 function Y(a){return M.t+(H-M.t-M.b)*(1-(a-ymin)/(ymax-ymin))}
-var cursor,dot;
+
 function draw(){
-  W=chart.clientWidth-24;H=Math.round(Math.max(190,Math.min(300,W*0.38)));
-  svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.setAttribute('height',H);svg.innerHTML='';
-  var blue=css('--profile'),line=css('--line'),muted=css('--muted'),amber=css('--amber');
-  // segment bands
+  W=chart.clientWidth-20;H=Math.round(Math.max(200,Math.min(300,W*0.4)));
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.setAttribute('height',H);svg.innerHTML='';bands=[];
+  var blue=css('--blue'),line=css('--line'),muted=css('--muted'),surface=css('--surface');
   SEG.forEach(function(s,i){
-    var x0=X(s.km_start),x1=X(s.km_end);
-    el('rect',{x:x0,y:M.t,width:x1-x0,height:H-M.t-M.b,fill:s.piege?amber:blue,opacity:i%2?.05:.1});
-    el('text',{x:(x0+x1)/2,y:M.t-9,'text-anchor':'middle','font-size':11,fill:s.piege?amber:muted,'font-weight':600},svg).textContent=s.id;
+    var x0=X(s.km_start),x1=X(s.km_end),c=blue;
+    bands.push(el('rect',{x:x0,y:M.t,width:x1-x0,height:H-M.t-M.b,fill:c,opacity:i%2?.05:.1}));
+    var t=el('text',{x:(x0+x1)/2,y:M.t-9,'text-anchor':'middle','font-size':12,'font-weight':700,fill:muted});t.textContent=s.id;
+    if(x1-x0>40){var p=el('text',{x:(x0+x1)/2,y:H-M.b-7,'text-anchor':'middle','font-size':11,'font-weight':600,fill:blue});p.textContent=s.allure_cible}
   });
-  // grid + y axis
-  [20,40,60].forEach(function(a){
+  [30,50,70].forEach(function(a){
     el('line',{x1:M.l,x2:W-M.r,y1:Y(a),y2:Y(a),stroke:line,'stroke-width':1});
-    el('text',{x:M.l-6,y:Y(a)+4,'text-anchor':'end','font-size':11,fill:muted}).textContent=a+' m';
+    var t=el('text',{x:M.l-8,y:Y(a)+4,'text-anchor':'end','font-size':11,fill:muted});t.textContent=a+' m';
   });
   for(var k=0;k<=20;k+=(W<520?5:2)){
-    el('text',{x:X(k),y:H-8,'text-anchor':k===20?'end':'middle','font-size':11,fill:muted}).textContent=k+(k===20?' km':'');
+    var t=el('text',{x:X(k),y:H-8,'text-anchor':k===20?'end':'middle','font-size':11,fill:muted});t.textContent=k+(k===20?' km':'');
   }
-  // area + path
-  var d=PROF.map(function(p,i){return (i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)}).join('');
+  // courbe de Catmull-Rom convertie en Bézier : tracé arrondi
+  var P=PROF.map(function(p){return [X(p[0]),Y(p[1])]}),d='M'+P[0][0].toFixed(1)+' '+P[0][1].toFixed(1);
+  for(var q=0;q<P.length-1;q++){
+    var a=P[q-1]||P[q],b=P[q],c=P[q+1],e=P[q+2]||c;
+    d+='C'+(b[0]+(c[0]-a[0])/6).toFixed(1)+' '+(b[1]+(c[1]-a[1])/6).toFixed(1)+' '+(c[0]-(e[0]-b[0])/6).toFixed(1)+' '+(c[1]-(e[1]-b[1])/6).toFixed(1)+' '+c[0].toFixed(1)+' '+c[1].toFixed(1);
+  }
   el('path',{d:d+'L'+X(TOTAL)+' '+Y(ymin)+'L'+X(0)+' '+Y(ymin)+'Z',fill:blue,opacity:.14});
   el('path',{d:d,fill:'none',stroke:blue,'stroke-width':2,'stroke-linejoin':'round'});
-  // gels
-  PLAN.fueling.gels.forEach(function(g){
-    var x=X(g.km),y=Y(altAt(g.km));
-    el('circle',{cx:x,cy:y,r:5,fill:css('--card'),stroke:blue,'stroke-width':2});
-    el('text',{x:x,y:y-10,'text-anchor':'middle','font-size':10,fill:muted}).textContent='gel';
+  function icon(id,x,y,size,c,label){
+    var u=el('use',{href:'#'+id,x:x,y:y,width:size,height:size,color:c});
+    if(label){var ti=document.createElementNS(NS,'title');ti.textContent=label;u.appendChild(ti)}
+    return u;
+  }
+  var gels=PLAN.fueling.gels,rav=PLAN.ravitos||[];
+  function near(k,list){return list.some(function(o){return Math.abs(o-k)<0.3})}
+  rav.forEach(function(k){
+    var x=X(k),y=Y(altAt(k)),both=near(k,gels.map(function(g){return g.km}));
+    el('circle',{cx:x,cy:y,r:3.5,fill:muted});
+    icon('i-water',x-(both?20:10),y-32,20,muted,'Ravitaillement · km '+fmtKm(k));
   });
+  gels.forEach(function(g,gi){
+    var x=X(g.km),y=Y(altAt(g.km)),both=near(g.km,rav);
+    el('circle',{cx:x,cy:y,r:3.5,fill:blue});
+    icon('i-gel',x-(both?0:10),y-32,20,blue,'Gel '+(gi+1)+' · km '+fmtKm(g.km));
+  });
+  icon('i-start',X(0)-4.5,Y(altAt(0))-19,20,blue,'Départ');
+  icon('i-finish',X(TOTAL)-4.5,Y(altAt(TOTAL))-19,20,blue,'Arrivée');
   cursor=el('line',{y1:M.t,y2:H-M.b,stroke:muted,'stroke-width':1,'stroke-dasharray':'3 3',opacity:0});
-  dot=el('circle',{r:5,fill:blue,stroke:css('--card'),'stroke-width':2,opacity:0});
+  dot=el('circle',{r:5.5,fill:blue,stroke:surface,'stroke-width':2.5,opacity:0});
   var hit=el('rect',{x:M.l,y:0,width:W-M.l-M.r,height:H,fill:'transparent'});
-  hit.addEventListener('pointermove',move);hit.addEventListener('pointerdown',move);
-  hit.addEventListener('pointerleave',leave);hit.addEventListener('pointerup',function(e){if(e.pointerType==='touch')leave()});
+  hit.addEventListener('pointermove',onPtr);hit.addEventListener('pointerdown',onPtr);
+  hit.addEventListener('pointerleave',function(e){if(e.pointerType!=='touch')leave()});
+  if(hoverKm!==null)show(hoverKm);else if(cur>=0)paintActive();
 }
-function move(e){
+function onPtr(e){
   var r=svg.getBoundingClientRect(),px=(e.clientX-r.left)*(W/r.width);
-  var km=Math.max(0,Math.min(TOTAL,(px-M.l)/(W-M.l-M.r)*TOTAL));
+  show(Math.max(0,Math.min(TOTAL,(px-M.l)/(W-M.l-M.r)*TOTAL)));
+}
+function show(km){
+  hoverKm=km;
   var i=segAt(km),s=SEG[i],a=altAt(km),x=X(km),y=Y(a);
   cursor.setAttribute('x1',x);cursor.setAttribute('x2',x);cursor.setAttribute('opacity',1);
   dot.setAttribute('cx',x);dot.setAttribute('cy',y);dot.setAttribute('opacity',1);
-  tip.innerHTML='<b>Km '+km.toFixed(1).replace('.',',')+'</b> · '+Math.round(a)+' m<br>Allure '+s.allure_cible+'/km · FC '+s.fc_cible+' bpm<br>Segment '+s.id+' · passage '+fmtTimeHM(timeAt(km));
+  tip.innerHTML='<b>Km '+(Math.round(km*10)/10).toFixed(1).replace('.',',')+'</b> · '+Math.round(a)+' m<br>'+
+    s.allure_cible+'/km · FC '+s.fc_cible.replace('-','–')+' bpm<small>Segment '+s.id+' · '+s.titre+' · passage '+fmtT(timeAt(km))+'</small>';
   tip.style.opacity=1;
-  var cr=chart.getBoundingClientRect(),sx=r.left-cr.left+x*(r.width/W),tw=tip.offsetWidth;
-  var left=Math.max(6,Math.min(chart.clientWidth-tw-6,sx-tw/2));
-  tip.style.left=left+'px';tip.style.top=Math.max(4,(r.top-cr.top)+y*(r.height/H)-tip.offsetHeight-14)+'px';
-  if(i!==cur){if(cur>=0)$('card'+cur).classList.remove('on');$('card'+i).classList.add('on');cur=i}
+  tip.style.left='6px';
+  var r=svg.getBoundingClientRect(),cr=chart.getBoundingClientRect(),sx=r.left-cr.left+x*(r.width/W),tw=tip.offsetWidth;
+  tip.style.left=Math.max(6,Math.min(chart.clientWidth-tw-6,sx-tw/2))+'px';
+  tip.style.top=((r.top-cr.top)+4)+'px';
+  setActive(i);
 }
 function leave(){
-  cursor.setAttribute('opacity',0);dot.setAttribute('opacity',0);tip.style.opacity=0;
-  if(cur>=0){$('card'+cur).classList.remove('on');cur=-1}
+  hoverKm=null;
+  if(!cursor)return;
+  cursor.setAttribute('opacity',0);dot.setAttribute('opacity',0);tip.style.opacity=0;setActive(-1);
 }
+function paintActive(){
+  bands.forEach(function(b,i){b.setAttribute('opacity',i===cur?.26:(i%2?.05:.1));b.setAttribute('fill',i===cur&&SEG[i].piege?css('--orange'):css('--blue'))});
+  SEG.forEach(function(_,i){$('seg'+i).classList.toggle('on',i===cur)});
+}
+function setActive(i){cur=i;paintActive()}
+
+// clavier
+svg.addEventListener('keydown',function(e){
+  var step=e.shiftKey?1:0.25,k=hoverKm===null?0:hoverKm;
+  if(e.key==='ArrowRight')k=Math.min(TOTAL,k+step);
+  else if(e.key==='ArrowLeft')k=Math.max(0,k-step);
+  else if(e.key==='Escape'){leave();return}
+  else return;
+  e.preventDefault();show(k);
+});
+svg.addEventListener('blur',function(){leave()});
+// sur tactile, la tooltip reste après le relevé du doigt ; un toucher ailleurs la ferme
+document.addEventListener('pointerdown',function(e){if(!chart.contains(e.target))leave()});
+
 draw();
 window.addEventListener('load',draw);
-try{var mq=matchMedia('(prefers-color-scheme:dark)');(mq.addEventListener?mq.addEventListener('change',draw):mq.addListener(draw))}catch(e){}
 var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,80)});
 })();
 </script>
